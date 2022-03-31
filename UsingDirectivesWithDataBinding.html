@@ -1,14 +1,38 @@
 <!DOCTYPE html>
-<html data-ng-app="">
+<html data-ng-app="app">
   <head>
     <title>Using AngularJS Directives and Dat Binding</title>
   </head>
 
   <body>
-    Name:
-    <br>
-    <input type="text" data-ng-model="name"> {{ name  }}
+    <div data-ng-controller="SimpleController">
+      Name:
+      <br>
+
+      <input type="text" data-ng-model="name"> {{ name  }}
+      <br>
+
+      <ul>
+        <li data-ng-repeat="cust in customers | filter:name | orderBy:'city'">
+          {{ cust.name | uppercase }} - {{ cust.city | lowercase }}
+        </li>
+      </ul>
+    </div>
     
     <script src="scripts/angular.min.js"></script>
+
+    <script>
+      var app = angular.module("app", [])
+
+      function SimpleController($scope) {
+        $scope.customers = [
+          { name:"Jhon Smith", city:"Phoenix" },
+          { name:"Jhon Doe", city:"New Yourk" },
+          { name:"Jane Doe", city:"San Francisco" }
+        ];
+      }
+
+      app.controller('SimpleController', SimpleController)
+    </script>
   </body>
 </html>
